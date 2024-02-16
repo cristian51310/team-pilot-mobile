@@ -8,7 +8,7 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={26} style={{ marginBottom: -4 }} {...props} />;
 }
 
 export default function TabLayout() {
@@ -20,16 +20,18 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
       }}>
       <Tabs.Screen
-        name="index"
+        name="kanban"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Tablero',
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="table" color={color} />
+          ),
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
                 {({ pressed }) => (
                   <FontAwesome
-                    name="info-circle"
+                    name="plus-square-o"
                     size={25}
                     color={Colors[colorScheme ?? 'light'].text}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
@@ -41,10 +43,30 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="ocr"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'OCR',
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="magic" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="todo"
+        options={{
+          title: 'ToDo',
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="calendar-check-o" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="notes"
+        options={{
+          title: 'Notas',
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="sticky-note-o" color={color} />
+          ),
         }}
       />
     </Tabs>
