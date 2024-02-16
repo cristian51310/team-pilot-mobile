@@ -22,7 +22,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="kanban"
         options={{
-          title: 'Tablero',
+          title: 'Tableros',
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="table" color={color} />
           ),
@@ -48,6 +48,15 @@ export default function TabLayout() {
           title: 'OCR',
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="magic" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="pdf"
+        options={{
+          title: 'PDFs',
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="file-pdf-o" color={color} />
           ),
         }}
       />

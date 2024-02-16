@@ -4,7 +4,7 @@ export default function TabTwoScreen() {
   return (
     <View className='flex-1 items-center justify-center'>
       <Text className='font-bold text-2xl'>
-        Reconocimiento de texto
+        Habla con tu pdf
       </Text>
     </View>
   );
