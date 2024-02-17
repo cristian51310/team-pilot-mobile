@@ -20,7 +20,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
       }}>
       <Tabs.Screen
-        name="kanban"
+        name="index"
         options={{
           title: 'Tableros',
           tabBarIcon: ({ color }) => (
