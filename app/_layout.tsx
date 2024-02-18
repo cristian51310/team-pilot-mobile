@@ -1,6 +1,5 @@
 import Providers from '@/components/Providers';
-import SignInWithOAuth from '@/components/SignInWithOAuth';
-import { SignedIn, SignedOut, useAuth } from '@clerk/clerk-expo';
+import { useAuth } from '@clerk/clerk-expo';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
 import { Stack, useRouter } from 'expo-router';
@@ -10,11 +9,6 @@ import "../global.css";
 
 // Catch any errors thrown by the Layout component.
 export { ErrorBoundary } from 'expo-router';
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,15 +21,13 @@ export default function InitialLayout() {
 }
 
 function RootLayout() {
+  const { isLoaded, isSignedIn } = useAuth();
+  const router = useRouter();
+
   const [loaded, error] = useFonts({
     //SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     ...FontAwesome.font,
   });
-
-  const { isLoaded, isSignedIn } = useAuth();
-  const router = useRouter();
-
-  if (!isLoaded || !loaded) return null;
 
   useEffect(() => {
     if (isSignedIn) {
@@ -45,32 +37,27 @@ function RootLayout() {
     }
   }, [isSignedIn]);
 
+  if (!isLoaded || !loaded) return null;
+
   return (
-    <>
-      <SignedIn>
-        <Stack>
-          <Stack.Screen
-            name="(tabs)"
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="(auth)"
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="profile"
-            options={{ presentation: 'modal', title: "Mi perfil" }}
-          />
-          <Stack.Screen
-            name="modal"
-            options={{ presentation: 'modal', }}
-          />
-        </Stack>
-      </SignedIn>
-      <SignedOut>
-        <SignInWithOAuth />
-      </SignedOut>
-    </>
+    <Stack>
+      <Stack.Screen
+        name="(tabs)"
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="(auth)"
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="profile"
+        options={{ presentation: 'modal', title: "Mi perfil" }}
+      />
+      <Stack.Screen
+        name="modal"
+        options={{ presentation: 'modal', title: "Crear Tablero" }}
+      />
+    </Stack>
   )
 }
 
