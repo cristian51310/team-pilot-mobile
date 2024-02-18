@@ -30,12 +30,13 @@ function RootLayout() {
   });
 
   useEffect(() => {
+    // Verificar si todas las condiciones necesarias están cumplidas
     if (isSignedIn) {
       router.replace('/');
-    } else if (!isSignedIn) {
+    } else {
       router.replace('/login');
     }
-  }, [isSignedIn]);
+  }, [isLoaded, loaded, isSignedIn, router]);
 
   if (!isLoaded || !loaded) return null;
 
