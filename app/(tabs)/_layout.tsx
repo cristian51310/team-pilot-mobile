@@ -1,3 +1,4 @@
+import UserAvatar from '@/components/UserAvatar';
 import Colors from '@/constants/Colors';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
@@ -18,6 +19,9 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        headerLeft: () => (
+          <UserAvatar />
+        ),
       }}>
       <Tabs.Screen
         name="index"

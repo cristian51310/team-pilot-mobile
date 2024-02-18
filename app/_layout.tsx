@@ -1,10 +1,11 @@
+import Providers from '@/components/Providers';
+import SignInWithOAuth from '@/components/SignInWithOAuth';
+import { SignedIn, SignedOut, useAuth } from '@clerk/clerk-expo';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-
-import Providers from '@/components/Providers';
 import "../global.css";
 
 // Catch any errors thrown by the Layout component.
@@ -15,38 +16,62 @@ export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+export default function InitialLayout() {
+  return (
+    <Providers>
+      <RootLayout />
+    </Providers>
+  )
+}
+
+function RootLayout() {
   const [loaded, error] = useFonts({
     //SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+  const { isLoaded, isSignedIn } = useAuth();
+  const router = useRouter();
+
+  if (!isLoaded || !loaded) return null;
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    if (isSignedIn) {
+      router.replace('/');
+    } else if (!isSignedIn) {
+      router.replace('/login');
     }
-  }, [loaded]);
+  }, [isSignedIn]);
 
-  if (!loaded) return null;
-
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
   return (
-    <Providers>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </Providers>
-  );
+    <>
+      <SignedIn>
+        <Stack>
+          <Stack.Screen
+            name="(tabs)"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="(auth)"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="profile"
+            options={{ presentation: 'modal', title: "Mi perfil" }}
+          />
+          <Stack.Screen
+            name="modal"
+            options={{ presentation: 'modal', }}
+          />
+        </Stack>
+      </SignedIn>
+      <SignedOut>
+        <SignInWithOAuth />
+      </SignedOut>
+    </>
+  )
 }
+
+
