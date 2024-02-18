@@ -3,13 +3,36 @@ import Colors from '@/constants/Colors';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import React from 'react';
-import { Pressable, useColorScheme } from 'react-native';
+import { Pressable, Text, View, useColorScheme } from 'react-native';
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
+  focused: boolean;
+  label: string;
 }) {
-  return <FontAwesome size={26} style={{ marginBottom: -4 }} {...props} />;
+  const isFocus = props.focused;
+  const classNamesContainer = ["py-1.5 px-7 rounded-full"]
+  const classNamesText = []
+
+  if (isFocus) classNamesText.push('text-purple-600 font-bold');
+  else classNamesText.push('text-gray-600 text-xs');
+
+  if (isFocus) classNamesContainer.push('bg-purple-200');
+
+  return (
+    <View className='flex justify-center items-center gap-1.5 -mb-7'>
+      <View className={classNamesContainer.join(" ")}>
+        <FontAwesome
+          size={isFocus ? 24 : 22}
+          {...props}
+        />
+      </View>
+      <Text className={classNamesText.join(" ")}>
+        {props.label}
+      </Text>
+    </View>
+  );
 }
 
 export default function TabLayout() {
@@ -19,6 +42,11 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          height: 100,
+          paddingHorizontal: 10,
+        },
         headerLeft: () => (
           <UserAvatar />
         ),
@@ -27,8 +55,8 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Tableros',
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="table" color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="table" label='Tableros' color={color} focused={focused} />
           ),
           headerRight: () => (
             <Link href="/modal" asChild>
@@ -50,8 +78,8 @@ export default function TabLayout() {
         name="ocr"
         options={{
           title: 'OCR',
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="magic" color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="magic" label='OCR' focused={focused} color={color} />
           ),
         }}
       />
@@ -59,17 +87,17 @@ export default function TabLayout() {
         name="pdf"
         options={{
           title: 'PDFs',
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="file-pdf-o" color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon focused={focused} name="file-pdf-o" label="PDFs" color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="todo"
         options={{
-          title: 'ToDo',
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="calendar-check-o" color={color} />
+          title: 'Tareas',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon focused={focused} label='ToDo' name="calendar-check-o" color={color} />
           ),
         }}
       />
@@ -77,8 +105,8 @@ export default function TabLayout() {
         name="notes"
         options={{
           title: 'Notas',
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="sticky-note-o" color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon focused={focused} label='Notas' name="sticky-note-o" color={color} />
           ),
         }}
       />
