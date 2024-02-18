@@ -55,8 +55,12 @@ function RootLayout() {
         options={{ presentation: 'modal', title: "Mi perfil" }}
       />
       <Stack.Screen
-        name="modal"
+        name="kanban-add"
         options={{ presentation: 'modal', title: "Crear Tablero" }}
+      />
+      <Stack.Screen
+        name="notes-add"
+        options={{ presentation: 'modal', title: "Crear Nueva Nota" }}
       />
     </Stack>
   )

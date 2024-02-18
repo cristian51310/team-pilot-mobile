@@ -2,6 +2,8 @@ import { ClerkProvider } from '@clerk/clerk-expo';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import Constants from "expo-constants";
 import * as SecureStore from 'expo-secure-store';
+import { SQLiteProvider } from "expo-sqlite/next";
+import React from 'react';
 import { useColorScheme } from 'react-native';
 
 const tokenCache = {
@@ -34,7 +36,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider tokenCache={tokenCache} publishableKey={key}>
       <ThemeProvider value={themeColor}>
-        {children}
+        <React.Suspense>
+          <SQLiteProvider useSuspense databaseName='mySQLiteDB.db'>
+            {children}
+          </SQLiteProvider>
+        </React.Suspense>
       </ThemeProvider>
     </ClerkProvider>
   )

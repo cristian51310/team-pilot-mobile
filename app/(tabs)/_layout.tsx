@@ -4,10 +4,12 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import * as NavigationBar from "expo-navigation-bar";
 import { Link, Tabs } from 'expo-router';
 import React from 'react';
-import { Pressable, Text, View, useColorScheme } from 'react-native';
+import { Platform, Pressable, Text, View, useColorScheme } from 'react-native';
 
-NavigationBar.setPositionAsync("absolute");
-NavigationBar.setBackgroundColorAsync("transparent");
+if (Platform.OS === 'android') {
+  NavigationBar.setPositionAsync("absolute");
+  NavigationBar.setBackgroundColorAsync("transparent");
+}
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
@@ -70,7 +72,7 @@ export default function TabLayout() {
               <TabBarIcon name="table" label='Tableros' color={color} focused={focused} />
             ),
             headerRight: () => (
-              <Link href="/modal" asChild>
+              <Link href="/kanban-add" asChild>
                 <Pressable>
                   {({ pressed }) => (
                     <FontAwesome
@@ -116,6 +118,20 @@ export default function TabLayout() {
           name="notes"
           options={{
             title: 'Notas',
+            headerRight: () => (
+              <Link href="/notes-add" asChild>
+                <Pressable>
+                  {({ pressed }) => (
+                    <FontAwesome
+                      name="plus-square-o"
+                      size={25}
+                      color={Colors[colorScheme ?? 'light'].text}
+                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>
+            ),
             tabBarIcon: ({ color, focused }) => (
               <TabBarIcon focused={focused} label='Notas' name="sticky-note-o" color={color} />
             ),
