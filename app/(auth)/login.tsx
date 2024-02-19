@@ -1,4 +1,4 @@
-import { Text, View } from "@/components/Themed";
+import { SafeAreaView, Text, View } from "@/components/Themed";
 import { useWarmUpBrowser } from "@/hooks/useWarmUpBrowser";
 import { useOAuth } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
@@ -34,17 +34,34 @@ const SignInWithOAuth = () => {
   }, []);
 
   return (
-    <View className="flex-1 justify-center items-center gap-5">
-      <Button
-        title="Sign in with Github"
-        onPress={onPress}
-      />
-      <Link href="/" asChild>
-        <Text className="text-sm underline text-blue-500">
-          Sign in with email
-        </Text>
-      </Link>
-    </View>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        padding: 20,
+      }}
+    >
+      <Text className="text-4xl font-bold">
+        Iniciar Sesion
+      </Text>
+
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Button
+          title="Sign in with Github"
+          onPress={onPress}
+        />
+        <Link href="/" asChild>
+          <Text className="text-sm underline text-blue-500">
+            Sign in with email
+          </Text>
+        </Link>
+      </View>
+    </SafeAreaView>
   );
 }
 export default SignInWithOAuth;

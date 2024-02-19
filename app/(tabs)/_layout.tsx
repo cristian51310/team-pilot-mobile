@@ -20,7 +20,14 @@ function TabBarIcon(props: {
   const isFocus = props.focused;
 
   return (
-    <View className='flex justify-center items-center gap-1.5 ios:-mb-7 android:-mb-3'>
+    <View
+      className='gap-1.5 ios:-mb-7 android:-mb-3'
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <View
         style={{
           backgroundColor: isFocus ? "#e9d5ff" : "transparent",

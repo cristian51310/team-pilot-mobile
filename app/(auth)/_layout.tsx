@@ -5,17 +5,12 @@ const AuthLayout = () => {
   return (
     <Stack
       screenOptions={{
-        headerStyle: {
-          backgroundColor: '#6c47ff',
-        },
+        headerShown: false,
         headerTintColor: '#fff',
         headerBackTitle: 'Back',
       }}>
       <Stack.Screen
         name="login"
-        options={{
-          headerTitle: 'Clerk Auth App',
-        }}
       />
     </Stack>
   );

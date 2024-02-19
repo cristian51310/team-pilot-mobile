@@ -36,7 +36,7 @@ function RootLayout() {
     } else {
       router.replace('/login');
     }
-  }, [isLoaded, loaded, isSignedIn, router]);
+  }, [isSignedIn, router]);
 
   if (!isLoaded || !loaded) return null;
 

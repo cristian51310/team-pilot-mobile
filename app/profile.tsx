@@ -12,7 +12,7 @@ export default function ProfileScreen() {
   return (
     <View className='flex-1 items-center p-4'>
       <Button
-        variant='primary'
+        variant='danger'
         label='Cerrar sesión'
         icon='sign-out'
         onPress={() => signOut()}
